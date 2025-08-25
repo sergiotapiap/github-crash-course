@@ -16,3 +16,21 @@ jobs:
         - name: Run tests
           run: npm test
           working-directory: ./second-action-react-demo
+    deploy:
+      runs-on: ubuntu-latest
+      needs: test
+      steps:
+        - name: Get code
+          uses: actions/checkout@v3
+        - name: Install NodeJS
+          uses: actions/setup-node@v3
+          with:
+            node-version: '18'
+        - name: Install dependencies
+          run: npm ci
+          working-directory: ./second-action-react-demo
+        - name: Built project
+          run: npm run build
+          working-directory: ./second-action-react-demo
+        - name: Deploy
+          run: echo "Deploying ..."
